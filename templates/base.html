@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html class="lt-ie9 lt-ie8" lang="ru"><![endif]-->
+<!--[if IE 8]>
+<html class="lt-ie9" lang="ru"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="ru"><!--<![endif]-->
+<head>
+    <title>World of hobbies | {% block title %}{% endblock %}</title>
+    <meta charset="utf-8"/>
+    <!--[if lt IE 9]>
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/static/js/script.js"></script>
+    <script src="/static/js/ui/jquery.ui.core.min.js"></script>
+    <script src="/static/js/ui/jquery.ui.slider.min.js"></script>
+    <script src="/static/js/touch.js"></script>
+</head>
+<body>
+<div class="bg"></div>
+<div class="cart-side-layout">
+    <div class="cart-side-wrp">
+        <div class="cart-side">
+            <p>В корзине</p>
+
+            <p class="cart-side__red"><span class="cart-side__items-amount">{{ cart_count }} </span></p>
+
+            <p>на сумму </p>
+
+            <p class="cart-side__red"><span class="cart-side__items-sum"> {{ cart_sum|floatformat:"0" }} </span> р.</p>
+            <a href="/cart/" class="cart-side__btn g-btn">Купить</a>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <header class="header">
+        <h1 class="header__heading">Мир увлечений World of Hobbies
+        </h1>
+
+        <div class="header__info">
+            <div class="header__enter">
+                <img class="header__login-icon" src="/static/img/login-icon.png"/>
+                    {% if user.is_authenticated %}
+                        <a href="/lk/">Личный кабинет</a> |
+                        <a href="/accounts/logout/">Выход</a>
+                    {% else %}
+                        <a href="/accounts/login/">Вход</a> |
+                        <a href="/accounts/register/">Регистрация</a>
+                    {% endif %}
+            </div>
+            <div class="header__phone"><span class="header__phone__code">+7 (917)</span> 587-21-21</div>
+            
+        </div>
+        <nav class="header__nav">
+            <a href="/" class="header__nav__i {% if 'home' in request_url %}active{% endif %}">Главная </a>
+            <a href="/catalog/" class="header__nav__i {% if 'catalog' in request_url %}active{% endif %}">Каталог </a>
+            <a href="/uslugi/" class="header__nav__i {% if 'uslugi' in request_url %}active{% endif %}"> Услуги </a>
+            <a href="/partneryi/" class="header__nav__i {% if 'partneryi' in request_url %}active{% endif %}">Партнеры </a>
+            <a href="/oplata-i-dostavka/" class="header__nav__i {% if 'oplata' in request_url %}active{% endif %}">Оплата и доставка </a>
+            <a href="/kontaktyi/" class="header__nav__i {% if 'kontaktyi' in request_url %}active{% endif %}">Контакты </a>
+        </nav>
+        
+	{% block catalog_menu %}
+            {% include 'catalog_menu.html' %}
+	{% endblock %}
+    </header>
+    {% block filter %}
+        {% include 'search.html' %}
+    {% endblock %}
+    
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <a href="/" class="footer__homelink"> <img class="footer_logo" src="/static/img/logo-footer.png" alt=""/></a>
+                
+        <div class="footer_block _1">
+            <ul>
+                {% for cat in categories_all %}
+                    {% if forloop.counter <= categories_all_count_1 %}
+                        <li><a href="/category/{{ cat.slug }}/">{{ cat.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="footer_block _2">
+            <ul>
+                {% for cat in categories_all %}
+                    {% if forloop.counter > categories_all_count_1 %}
+                        {% if forloop.counter <= categories_all_count_2 %}
+                            <li><a href="/category/{{ cat.slug }}/">{{ cat.name }}</li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="footer_block _3">
+            <ul>
+                {% for cat in categories_all %}
+                    {% if forloop.counter > categories_all_count_2 %}
+                        {% if forloop.counter <= categories_all_count_3 %}
+                            <li><a href="/category/{{ cat.slug }}/">{{ cat.name }}</li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="footer_block footer_block__info">
+            <div class="footer_block__address">
+                <p>Москва, </p>
+
+                <p> ул. Название, д. 55 </p>
+
+                <p> Тел.: +7(917)587-21-21 </p>
+                <a href="mailto:info@sitename.ru">info@sitename.ru</a>
+            </div>
+            <div class="footer_block__map">
+                <a href="/kontaktyi/">Как нас найти</a>
+            </div>
+            <div class="footer_block__soc">
+                <a href="#" class="vk"></a>
+                <a href="#" class="odn"></a>
+                <a href="#" class="fb"></a>
+                <a href="#" class="tw"></a>
+            </div>
+	    <p><br /><a href="http://webgenesis.ru/" target='_blank'>Создание и <br />поддержка сайта</a></p>
+    </footer>
+</div>
+</body>
+</html>

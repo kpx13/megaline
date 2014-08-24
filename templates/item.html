@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block filter %}
+    {% include 'filter.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="tovar">
+            <h3><a href="/category/{{ category.slug }}/">{{ category.name }}</a> - <span> {{ item.name }}</span></h3>
+
+            <div class="tovar-slider">
+                <div class="tovar-bigImg">
+                    {% for i in item.image.all %}
+                        {% thumbnail i.image "x800" as im %}
+                            <div class="tovar-bigImg__i{% if forloop.first %} active{% endif %}"><img src="{{ im.url }}" alt="{{ item.name }}"/></div>
+                        {% endthumbnail %}
+                    {% endfor %}
+                </div>
+                <div class="tovar-preview-wrp">
+                    {% for i in item.image.all %}
+                        {% thumbnail i.image "150" as im %}
+                            <div class="tovar-preview"><img class="active" src="{{ im.url }}" alt="{{ item.name }}"></div>
+                        {% endthumbnail %}
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="tovar-info">
+                <div class="tovar-descr">
+                    <h5 class="tovar-title">Артикул - <span class="tovar-art">{{ item.art }}</span></h5>
+
+                    {{ item.description|safe }}
+                </div>
+                <div class="tovar-info__block">
+                    <ul>
+                        {% for p in item.parametr.all %}
+                            <li>{{ p.parametr.name }} - <span>{{ p.value }}</span></li>
+                            {% if forloop.counter|divisibleby:3 %}</ul><ul>{% endif %}
+                        {% endfor %}
+                        
+                        {% if item.sizes_request %}
+                            {% if user.is_authenticated %}
+                                <li>Для заказа данного товара лучше ввести точные размеры <a href='/lk/'>здесь</a>.</li>
+                            {% else %}
+                                <li>Для заказа данного товара лучше ввести точные размеры. 
+                                Для этого необходимо <a href="/accounts/login/">войти</a> или <a href="/accounts/register/">зарегистрироваться</a>.</li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="tovar-price__block">
+                    <form method='POST'>
+                        {% if in_cart %}
+                            <a href='/cart/'>Товар в корзине</a>
+                        {% endif %}
+                        <div class="tovar-price-wrp">Цена: <span class="tovar-price"> {{ item.price|floatformat:"0" }} </span><span> р.</span></div>
+                        
+                        <button type="submit" class="tovar-price-btn g-btn">В корзину</button>
+
+                            
+                        <input type="hidden" name='action' value="add_in_basket" />
+                        <input type="hidden" name='item_id' value="{{ item.id }}" />
+                        {% csrf_token %}
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <h5 class="heading"><span>другие товары из этой категории</span></h5>
+
+
+        <div class="catalog">
+            {% for i in same %}
+                {% include 'item_short.html' with i=i %}
+            {% endfor %}
+        </div>
+{% endblock %}
+
+{% comment %}
+                
+
+{% endcomment %}

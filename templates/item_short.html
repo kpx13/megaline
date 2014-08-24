@@ -1,0 +1,25 @@
+{% load thumbnail %}
+<div class="catalog__item">
+    <div class="catalog__item__img">
+        <div class="catalog__item__img-wrp">
+            {% thumbnail i.image.all.0.image "150" as im %}
+                <a href="/item/{{ i.slug }}/"><img src="{{ im.url }}" alt="{{ i.name }}"></a>
+            {% endthumbnail %}
+        </div>
+    </div>
+    <h4 class="catalog__item__title"><a href="/item/{{ i.slug }}/">{{ i.name }}</a></h4>
+
+    <div class="catalog__item__descr">
+        {{ i.description|removetags:"p span img br div strong nbsp"|truncatechars:90 }}
+    </div>
+    <div class="catalog__item__price-wrp">
+        <span class="catalog__item__price">{{ i.price|floatformat:"0" }} р.</span>
+        
+        <form method='POST' action='/item/{{ i.slug }}/' style='border: none; padding: 0px; margin: 0px;'>
+            <button type="submit" class="addToCart"></button>
+            <input type="hidden" name='action' value="add_in_basket" />
+            <input type="hidden" name='item_id' value="{{ i.id }}" />
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
