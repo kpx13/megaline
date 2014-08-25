@@ -36,10 +36,10 @@
         </div>
         <div class="enter">
             {% if user.is_authenticated %}
-                <a href="/lk/" class="txt-red">Личный кабинет</a> <br/>
+                <a href="/lk/" class="txt-red">Личный кабинет</a><br/>
                 <a href="/accounts/logout/">Выход</a>
             {% else %}
-                <a href="/accounts/login/" class="txt-red">Вход</a> <br/>
+                <a href="/accounts/login/" class="txt-red">Вход</a><br/>
                 <a href="/accounts/register/">Регистрация</a>
             {% endif %}
             
@@ -73,88 +73,7 @@
     {% endblock %}
     <div class="container">
         <div class="sidebar">
-            <h2>Каталог</h2>
-            <nav class='sidebar-nav'>
-                <ul>
-                    <li><a href="#">Кондиционеры</a>
-                        <ul>
-                            <li><a href="#">Подраздел 1</a></li>
-                            <li><a href="#">Подраздел 2</a></li>
-                            <li><a href="#">Подраздел 3</a></li>
-                            <li><a href="#">Подраздел 4</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Вентиляция</a></li>
-                    <li><a href="#">Монтаж</a></li>
-                </ul>
-            </nav>
-            <div class="filter">
-                <h2>Выберите нужные
-                    параметры</h2>
-
-                <form action="post">
-                    <div class="filter-block">
-                        <div class="filter-block-title"> Название:</div>
-                        <input type="text"/>
-                    </div>
-                    <div class="filter-block">
-                        <span class="filter-block-title">Цена:</span>
-                        от <input class="number" type="text" value="0 р." id="amountStart"/> до
-                        <input type="text" class="number" value="25000 р." id="amountEnd"/>
-
-                        <div id="slider-range"></div>
-                        <span class="slider-range-min"></span>
-                        <span class="slider-range-max"></span>
-
-                    </div>
-                    <div class="filter-block">
-                        <div class="filter-block-title">Производитель:</div>
-                        <label><input type="checkbox"/>Daikin</label>
-                        <label><input type="checkbox"/>Mitsubishi Electric</label>
-                        <label><input type="checkbox"/>Toshiba</label>
-                        <label><input type="checkbox"/>Mitsubishi Heavy</label>
-                        <label><input type="checkbox"/>Gree</label>
-                        <label><input type="checkbox"/>Panasonic</label>
-                        <label><input type="checkbox"/>LG</label>
-                        <label><input type="checkbox"/>General Climate</label>
-                        <label><input type="checkbox"/>Fujitsu</label>
-                        <label><input type="checkbox"/>General Fujitsu</label>
-                        <label><input type="checkbox"/>Dantex</label>
-                    </div>
-                    <div class="filter-block">
-                        <div class="filter-block-title">Сборка:</div>
-                        <label><input type="checkbox"/>Китай</label>
-                        <label><input type="checkbox"/>Малайзия</label>
-                        <label><input type="checkbox"/>Таиланд</label>
-                        <label><input type="checkbox"/>Турция</label>
-                        <label><input type="checkbox"/>Япония</label>
-                        <label><input type="checkbox"/>Panasonic</label>
-                        <label><input type="checkbox"/>Южная Корея</label>
-                        <label><input type="checkbox"/>Бельгия</label>
-                        <label><input type="checkbox"/>Чехия</label>
-                        <label><input type="checkbox"/> General Fujitsu</label>
-                        <label><input type="checkbox"/>Великобритания</label>
-                    </div>
-                    <div class="filter-block">
-                        <div class="filter-block-title">Тип:</div>
-                        <select name="" id="">
-                            <option value="">Выберите тип</option>
-                            <option value="">тип 1</option>
-                            <option value="">тип 2</option>
-                            <option value="">тип 3</option>
-                        </select>
-                    </div>
-                    <div class="filter-block">
-
-                        <img src="/static/img/btn-search.png" alt="" usemap="#map"/>
-                        <span class="search-btn-txt">Искать</span>
-                        <map name="map">
-                            <area shape="poly" coords="0, 0, 1, 19, 130, 63, 260, 19, 259, 1" href="#"/>
-                        </map>
-
-                    </div>
-                </form>
-            </div>
+            {% include 'catalog_panel.html' %}
         </div>
         <div class="content">
             {% block content %}

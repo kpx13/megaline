@@ -471,7 +471,7 @@ h2 {
 
 }
 
-input[type='text'] {
+input[type='text'], input[type='password'] {
     border: 1px solid #c0bfbf;
     border-radius: 2px;
     height: 24px;
@@ -1717,3 +1717,5 @@ p.footer-title {
 .header-block p {
     margin-bottom: 0;
 }
+
+.errorlist {color: red; font-size: 13px}
