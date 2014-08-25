@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+
+    <div class="block-wrapper">
+        <h2>КОРЗИНА</h2>
+        
+        {% if items %}    
+                {% if not user.is_authenticated %}
+                    <p style='color: red'> Для того, чтобы оформить заказ необходимо <a href="/accounts/login/">войти</a> или <a href="/accounts/register/">зарегистрироваться</a>.</p>
+                {% endif %}
+                
+                {% for i in items %}
+                    <div class="cart-item">
+                        <div class="cart-item-img cart-item-block">
+                            {% thumbnail i.item.image.all.0.image "x70" as im %}
+                                <a href="/item/{{ i.item.slug }}/"><img src="{{ im.url }}" alt="{{ i.item.name }}" /></a>
+                            {% endthumbnail %}
+                        </div>
+                        <div class="cart-item-info cart-item-block">
+                            <div class="cart-item-title">{{ i.item.name }}</div>
+                            <div class="cart-item-descr">
+                                {{ i.item.description_short }}
+                            </div>
+                        </div>
+                        
+                        <form method='POST'>
+                            <div class="cart-item-amount cart-item-block">
+                                Кол-во 
+                                <input type="text" class="cart-item__amount-input" value="{{ i.count }}" name='set_count' maxlength="3"/>
+                                <input type="hidden" name='item_id' value="{{ i.item.id }}" />
+                                <input type="hidden" name='action' value="set_count" />
+                                {% csrf_token %}
+                            </div>
+                        </form>      
+
+            
+                        <div class="cart-item-price cart-item-block">Цена: <span>{{ i.price|floatformat:"0" }} руб.</span></div>
+                        <div class="cart-item-price-total cart-item-block">Сумма: <strong>{{ i.sum|floatformat:"0" }} руб.</strong></div>
+                        
+                        <form method='POST'>
+                            <button type="submit" name='action' value="del_from_basket"  class="cart-item-remove"/>Удалить</button>
+                            <input type="hidden" name='item_id' value="{{ i.item.id }}" />
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                {% endfor %}
+                
+            </table>
+            <div class="tovar-price__block">
+                {% if sizes_request %} 
+                    {% if user.is_authenticated %}
+                        <p style='color: red'>У Вас в корзине присутствует товар, для которого лучше ввести точные размеры <a href='/lk/'>здесь</a>.</p>
+                    {% else %}
+                        <p style='color: red'>У Вас в корзине присутствует товар, для которого лучше ввести точные размеры. 
+                        Для этого необходимо <a href="/accounts/login/">войти</a> или <a href="/accounts/register/">зарегистрироваться</a>.</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+            
+            <div class="cart-item-total-block">
+                ОБЩАЯЯ СУММА:  <strong>{{ cart_sum|floatformat:"0" }} руб. </strong> 
+                <a href="/order/" class="btnOrder btn-yellow"><span>Оформить заказ</span></a>
+            </div>
+        {% else %}
+            <h3>Ваша корзина пуста.</h3>
+        {% endif %}
+    </div>
+    
+    <div class="cart-block left">
+        <h2>Способ доставки</h2>
+        <i class="icon delivery-icon"></i>
+        <p>В пределах МКАД  - <strong>300 рублей</strong>. </p>
+        За пределами МКАД до Большого Бетонного кольца  - <strong>25 рублей</strong> за километр.
+    </div>
+    <div class="cart-block right">
+        <h2>Способ оплаты</h2>
+        <ol>
+            <li>С помощью Интернет-кошелька <i class='icon icon-yandex'></i></li>
+            <li>Наличными при получении</li>
+            <li>С помощью банковской карты<i class='icon icon-card'></i></li>
+        </ol>
+    </div>
+{% endblock %}
+

@@ -25,14 +25,17 @@
 <div class="bg-top"></div>
 <div class="wrapper">
     <header class="header">
-        <h1 class="header__heading">Megaline Инжиниринг
-        </h1>
-
+        <a href='/'><h1 class="header__heading">Megaline Инжиниринг</h1></a>
 
         <div class="header-cart">
             <i class="icon cart-icon"></i>
-            <span class="header-cart-title">Ваша корзина пуста</span>
-            <a href="#">Оформить заказ</a>
+            {% if cart_count %}
+                <span class="header-cart-title">В корзине {{ cart_count }} шт. на сумму {{ cart_sum|floatformat:"0" }} руб.</span>
+                <a href="/cart/">Оформить заказ</a>
+            {% else %}
+                <br />
+                <span class="header-cart-title">Ваша корзина пуста.</span>
+            {% endif %}
         </div>
         <div class="enter">
             {% if user.is_authenticated %}
@@ -44,13 +47,7 @@
             {% endif %}
             
         </div>
-        <div class="header-block">
-            <i class="icon phone-icon"></i>
-
-            <div class="header-block-title"> Время работы
-            </div>
-            <span>ПН-ВС с 09:00 до 21:00</span>
-        </div>
+        
         <div class="header-block">
             <i class="icon icon-clock"></i>
 
@@ -60,8 +57,8 @@
         </div>
     </header>
     <nav class='header-nav'>
-        <a href="/">Главная </a>
-        <a href="/o-kompanii/">О компании </a>
+        <a href="/" {% if 'home' in request_url %} class='active' {% endif %}>Главная </a>
+        <a href="/o-kompanii/" {% if 'o-kompanii' in request_url %} class='active' {% endif %}>О компании </a>
         <a href="#">Услуги</a>
         <a href="#">Прайс-лист</a>
         <a href="#">Оплата и доставка </a>

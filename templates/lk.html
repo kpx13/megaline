@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+
+    <div class="block-wrapper">
+        <h2>Данные для оформления заказа</h2>
+        
+        <form class='form' method='post'>
+            <div class='form-wrap'>
+                <div class='form-left'>
+                    {{ form.as_table }}
+                    <button type='submit' class='btn-yellow'>Сохранить</button>
+                    {% csrf_token %}
+                </div>
+                <div class='form-right'>        
+                    
+                    <a href='/accounts/password/change/'>Сменить пароль</a>
+                    
+                    
+                </div>
+                
+                
+            </div>
+        </form>
+        
+    </div>
+{% endblock %}

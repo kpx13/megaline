@@ -55,32 +55,6 @@ def home_page(request):
     c.update(Page.get_page_by_slug('home'))
     return render_to_response('home.html', c, context_instance=RequestContext(request))
 
-def news(request, slug=None):
-    c = get_common_context(request)
-    reset_catalog(request)
-    if slug == None:
-        items = NewsItem.objects.all()
-        paginator = Paginator(items, NEWS_PAGINATION_COUNT)
-        page = int(request.GET.get('page', '1'))
-        try:
-            items = paginator.page(page)
-        except PageNotAnInteger:
-            page = 1
-            items = paginator.page(page)
-        except EmptyPage:
-            page = paginator.num_pages
-            items = paginator.page(page)
-        c['page'] = page
-        c['page_range'] = paginator.page_range
-        if len(c['page_range']) > 1:
-            c['need_pagination'] = True
-        
-        c['news'] = items
-        return render_to_response('news.html', c, context_instance=RequestContext(request))
-    else:
-        c['new'] = NewsItem.get_by_slug(slug)
-        return render_to_response('new.html', c, context_instance=RequestContext(request))
-
 
 def category(request, slug):
     c = get_common_context(request)
@@ -165,30 +139,8 @@ def cart(request):
     else:
         request.session['catalog_cart_count'] = 10
         c['count'] = 10
-    
-    items = c['cart_working'].get_content(request.user)
-    
-    c['sizes_request'] = False
-    for oc in items:
-        if oc['item'].sizes_request:
-            c['sizes_request'] = True 
-    
-    paginator = Paginator(items, request.session['catalog_cart_count'])
-    page = int(request.GET.get('page', '1'))
-    try:
-        items = paginator.page(page)
-    except PageNotAnInteger:
-        page = 1
-        items = paginator.page(page)
-    except EmptyPage:
-        page = paginator.num_pages
-        items = paginator.page(page)
-    c['page'] = page
-    c['page_range'] = paginator.page_range
-    if len(c['page_range']) > 1:
-        c['need_pagination'] = True
-    
-    c['items'] = items
+
+    c['items'] = c['cart_working'].get_content(request.user)
     
     return render_to_response('cart.html', c, context_instance=RequestContext(request))
 
@@ -218,7 +170,7 @@ def order(request):
         
     c['form'] = form
     c['orderform'] = orderform
-    return render_to_response('order_fiz.html', c, context_instance=RequestContext(request))
+    return render_to_response('order.html', c, context_instance=RequestContext(request))
 
 
 def lk(request):
@@ -240,7 +192,7 @@ def lk(request):
             profile.save()
             return HttpResponseRedirect('/lk/')
     c['form'] = form
-    return render_to_response('lk_fiz.html', c, context_instance=RequestContext(request))
+    return render_to_response('lk.html', c, context_instance=RequestContext(request))
     
 
 def other_page(request, page_name):

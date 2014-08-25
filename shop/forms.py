@@ -7,5 +7,3 @@ class OrderForm(ModelForm):
     class Meta:
         model = Order
         exclude = ('user', 'date')
-        
-    comment = fields.CharField(widget=TextInput(attrs={'placeholder': u'Комментарий'}))

@@ -1388,6 +1388,8 @@ input.cart-item__amount-input {
     bottom: 10px;
     text-decoration: underline;
     cursor: pointer;
+    border: none;
+    background: none;
 }
 
 .cart-item-remove:hover {
@@ -1404,6 +1406,7 @@ input.cart-item__amount-input {
 
 .btnOrder {
     margin-left: 20px;
+    text-decoration: none;
 }
 
 .cart-block {

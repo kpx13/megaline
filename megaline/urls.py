@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^$' , views.home_page),
     url(r'^lk/$' , views.lk),
     url(r'^cart/$' , views.cart),
-    url(r'^order/$' , views.order),
+    url(r'^order/$', views.order),
     
     url(r'^catalog/$', views.catalog),
     url(r'^filter/(?P<slug>[\w-]+)/$', views.category_filter),
@@ -32,8 +32,6 @@ urlpatterns = patterns('',
     url(r'^category/$', views.category, {'slug': None}),
     url(r'^item/(?P<slug>[\w-]+)/$' , views.item),
     
-    url(r'^news/(?P<slug>[\w-]+)/$' , views.news),
-    url(r'^news/$' , views.news),
     url(r'^sitemap.xml$' , views.sitemap),
     
     url(r'^(?P<page_name>[\w-]+)/$' , views.other_page),

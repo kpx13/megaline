@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+    <div class="block-wrapper">
+        <h2>Оформление заказа</h2>
+        
+        <form class='form' method='post'>
+            <div class='form-wrap'>
+                <div class='form-left'>
+                    {{ form.as_table }}
+                    
+                    {% if orderform.comment.errors %}
+                        <div class="form-error">{{ orderform.comment.errors.0 }}</div>
+                    {% endif %}
+                    
+                    <textarea name='comment' placeholder='Комментарий к заказу' style='width: 100%' rows='5'>{% if orderform.comment.value %}{{ orderform.comment.value }}{% endif %}</textarea>
+                </div>
+                <div class='form-right'>        
+                    
+                    
+                
+                    <p>Доставка</p>
+                    
+                    {% if orderform.delivery.errors %}
+                        <div class="form-error">{{ orderform.delivery.errors.0 }}</div>
+                    {% endif %}
+                    
+                    <label><input type="radio" name="delivery" value="1">Доставка по Москве</label>
+                    <label><input type="radio" name="delivery" value="2">Доставка до ТК</label>
+                    <label><input type="radio" name="delivery" value="3">Доставка до двери за пределами Москвы</label>
+                    <label><input type="radio" name="delivery" value="4">Самовывоз со склада в Москве</label>
+                    
+                    
+                    <button type='submit' class='btn-yellow'>Оформить</button>
+                    {% csrf_token %}
+                </div>
+                
+                
+            </div>
+        </form>
+        
+    </div>
+{% endblock %}
+
