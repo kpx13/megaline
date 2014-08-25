@@ -661,12 +661,16 @@ area {
     position: absolute;
     left: 41%;
     top: 28px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #fff;
     pointer-events: none;
     text-transform: uppercase;
     text-shadow: 1px 0 #297a9a;
+    border: none;
+    background: transparent;
+    margin: 0px;
+    padding: 0px;
 }
 
 .filter-block:last-child {

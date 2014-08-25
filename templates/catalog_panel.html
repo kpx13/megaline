@@ -22,7 +22,8 @@
     <div class="filter">
         <h2>Выберите нужные параметры</h2>
 
-        <form action="post">
+        <form action="/filter/{{ category.slug }}/" method='post'>
+            {% csrf_token %}
             <div class="filter-block">
                 <div class="filter-block-title"> Название:</div>
                 <input type="text"/>
@@ -73,13 +74,13 @@
             
             
             <div class="filter-block">
-
                 <img src="/static/img/btn-search.png" alt="" usemap="#map"/>
-                <span class="search-btn-txt">Искать</span>
-                <map name="map">
-                    <area shape="poly" coords="0, 0, 1, 19, 130, 63, 260, 19, 259, 1" href="#"/>
-                </map>
-
+                <button type='submit' class="search-btn-txt">
+                    <map name="map">
+                        <area shape="poly" coords="0, 0, 1, 19, 130, 63, 260, 19, 259, 1" />
+                    </map>
+                    Искать
+                </button>
             </div>
         </form>
     </div>
