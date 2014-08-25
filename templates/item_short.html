@@ -1,26 +1,33 @@
 {% load thumbnail %}
 
-<div class="catalog__item">
-    <div class="catalog__item__img">
-        <div class="catalog__item__img-wrp">
-            {% thumbnail i.image.all.0.image "150" as im %}
-                <a href="/item/{{ i.slug }}/"><img src="{{ im.url }}" alt="{{ i.name }}"></a>
-            {% endthumbnail %}
+<a href="/item/{{ i.slug }}" class="catalog__item">
+    <div class="catalog__item-inner">
+        <div class="catalog__item__img">
+            <div class="catalog__item__img-wrp">
+                {% if i.is_novelty %}
+                    <span class="sticker"><span>New</span></span>
+                {% endif %}
+                {% thumbnail i.image.all.0.image "150" as im %}
+                    <img src="{{ im.url }}" alt="{{ i.name }}">
+                {% endthumbnail %}
+            </div>
         </div>
-    </div>
-    <h4 class="catalog__item__title"><a href="/item/{{ i.slug }}/">{{ i.name }}</a></h4>
+        <h4 class="catalog__item__title">{{ i.name }}</h4>
 
-    <div class="catalog__item__descr">
-        {{ i.description|removetags:"p span img br div strong nbsp"|truncatechars:90 }}
-    </div>
-    <div class="catalog__item__price-wrp">
-        <span class="catalog__item__price">{{ i.price|floatformat:"0" }} р.</span>
+        <div class="catalog__item__descr">
+            {% for p in i.parametr.all %}
+                <p>{{ p.parametr.name }}: <span>{{ p.value }}</span></p>
+            {% endfor %}
+        </div>
         
         <form method='POST' action='/item/{{ i.slug }}/' style='border: none; padding: 0px; margin: 0px;'>
-            <button type="submit" class="addToCart"></button>
+            <div class='item-price-wrap'>
+                <span class="catalog__item__price">{{ i.price|floatformat:"0" }} руб.</span>
+            </div>
+            <button type='submit' class="addToCart btn-yellow"><span>Купить</span></button>
             <input type="hidden" name='action' value="add_in_basket" />
             <input type="hidden" name='item_id' value="{{ i.id }}" />
             {% csrf_token %}
         </form>
     </div>
-</div>
+</a>

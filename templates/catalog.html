@@ -3,22 +3,40 @@
 {% block title %}{{ category.name }}{% endblock %}
 
 {% block content %}
-
-    {% if items %}
-        <div class="catalog">
-            {% for i in items %}
-                {% include 'item_short.html' with i=i %}
-            {% endfor %}
-        </div>
+    <div class="breadcrumbs">
+        <a href="/">Главная</a>
+        <a href="/catalog/">Каталог</a>
+        {% for b in category.breadcrumb %}
+            <a href="/category/{{ b.slug }}/">{{ b }}</a>
+        {% endfor %}
+        <span>{{ category.name }}</span>
     </div>
-    {% else %}
-        <h3>В этой категории нет товаров.</h3>
-    {% endif %}
-	{% if category.desc %}
-        <div class="text-block">
-               <div class="heading"><span>Описание</span></div>
-        <p>{{ category.desc }}</p>
+  <!--  
+    <div class="block-top">
+        <strong>Сортировка по</strong> 
+        <select name="" class="select">
+            <option value="">Популярности</option>
+            <option value="">тип 1</option>
+            <option value="">тип 2</option>
+            <option value="">тип 3</option>
+        </select>
+    </div>-->
+
+    <div class="block-wrapper">
+        <h2>{{ category.name }}</h2>
+        {% if category.desc %}
+            <h3>Описание</h3>
+            <p>{{ category.desc }}</p>
         {% endif %}
 
-    
+        {% if items %}
+            <div class="catalog">
+                {% for i in items %}
+                    {% include 'item_short.html' with i=i %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <h3>В этой категории нет товаров.</h3>
+        {% endif %}
+    </div>
 {% endblock %}

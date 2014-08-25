@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+    
+    {% comment %}
+
+        <div class="tovar">
+            <h3><a href="/category/{{ category.slug }}/">{{ category.name }}</a> - <span> {{ item.name }}</span></h3>
+
+            <div class="tovar-slider">
+                <div class="tovar-bigImg">
+                    {% for i in item.image.all %}
+                        {% thumbnail i.image "x800" as im %}
+                            <div class="tovar-bigImg__i{% if forloop.first %} active{% endif %}"><img src="{{ im.url }}" alt="{{ item.name }}"/></div>
+                        {% endthumbnail %}
+                    {% endfor %}
+                </div>
+                <div class="tovar-preview-wrp">
+                    {% for i in item.image.all %}
+                        {% thumbnail i.image "150" as im %}
+                            <div class="tovar-preview"><img class="active" src="{{ im.url }}" alt="{{ item.name }}"></div>
+                        {% endthumbnail %}
+                    {% endfor %}
+                </div>
+
+
+    {% endcomment %}
+    
+    
+    <div class="breadcrumbs">
+        <a href="/">Главная</a>
+        <a href="/catalog/">Каталог</a>
+        {% for b in category.breadcrumb %}
+            <a href="/category/{{ b.slug }}/">{{ b }}</a>
+        {% endfor %}
+        <a href="/category/{{ category.slug }}/">{{ category.name }}</a>
+        <span>{{ item.name }}</span>
+    </div>
+    
+    <div class="block-wrapper">
+        <div class="tovar">
+           <h2>{{ item.name }}</h2>
+
+            <div class="tovar-slider">
+                <div class="tovar-bigImg">
+                    {% for i in item.image.all %}
+                        {% if forloop.first %}
+                            <div class="tovar-bigImg__i active" style="display: block"><img src="/media/{{ i.image }}" alt="{{ item.name }}"></div>
+                        {% else %}
+                            <div class="tovar-bigImg__i" style="display: none;"><img src="/media/{{ i.image }}" alt="{{ item.name }}"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="tovar-preview-wrp">
+                    {% for i in item.image.all %}
+                        {% thumbnail i.image "150" as im %}
+                            <div class="tovar-preview {% if forloop.first %}active{% endif %}"><img src="{{ im.url }}"></div>
+                        {% endthumbnail %}
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="tovar-info">
+            
+                <form method='POST'>
+                    {% if in_cart %}
+                        <a href='/cart/'>Товар в корзине</a><br /><br />
+                    {% endif %}
+                    <div class="tovar-price__block">
+                        <button type="submit" class="addToCart btn-yellow"><span>Купить</span></button>
+                        <div class='item-price-wrap'>
+                            <span class="catalog__item__price">{{ item.price|floatformat:"0" }} руб.</span>
+                        </div>
+                    </div>
+                        
+                    <input type="hidden" name='action' value="add_in_basket" />
+                    <input type="hidden" name='item_id' value="{{ item.id }}" />
+                    {% csrf_token %}
+                </form>
+        
+                
+
+         <!--       <div class="tovar-guaranty">
+                    ГАРАНТИЯ: <span class="tovar-guaranty-term">3 ГОДА </span>
+                </div>-->
+                <div class="tovar-descr">
+                    <div class="tovar-info-block">
+                        <p>{{ item.description_short|safe }}</p>
+                        <p><strong>Артикул:</strong> <span>{{ item.art }}</span></p>
+                        {% for p in item.parametr.all %}
+                            <p><strong>{{ p.parametr.name }}:</strong> <span>{{ p.value }}</span></p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="tabs">
+            <span class='tab-link'>ОПИСАНИЕ</span>
+            <span class='tab-link active'>ХАРАКТЕРИСТИКи </span>
+        </div>
+        <div class="tabs-container">
+            <div class="tab">
+                {{ item.description|safe }}
+            </div>
+            <div class="tab">
+                <h4>Здесь вопрос: нужны вообще эти характеристики, или оставить только описание?</h4>
+                {{ item.description|safe }}
+            </div>
+        </div>
+    </div>
+    <div class="block-wrapper">
+        <h2>Товары этой же категории:</h2>
+
+        <div class="catalog">
+            {% for i in same %}
+                {% include 'item_short.html' with i=i %}
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock %}

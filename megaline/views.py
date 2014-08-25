@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import auth
 from django.core.context_processors import csrf
-from django.http import HttpResponseRedirect, HttpResponseNotFound, Http404
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.forms.util import ErrorList
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import datetime
 
 from pages.models import Page
-from news.models import NewsItem
 from catalog.models import Category, Item
 from shop.models import Cart, Order
 from shop.forms import OrderForm
