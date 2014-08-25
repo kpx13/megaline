@@ -89,12 +89,15 @@ $(function () {
         }
     });
 
-    $(".sidebar-nav ul li").on('mouseover', function () {
-
-        $(this).find('ul').closest('li').addClass("opened")
-        $(this).find('ul').slideDown()
-
+    $(".sidebar-nav ul li.p").on('mouseover', function () {
+        $(this).find('ul').closest('li').addClass("opened");
+        $(this).find('ul').slideDown();
     });
+    
+    $(".sidebar-nav ul").on('mouseleave', function () {
+            $(this).find('ul').slideUp()
+    });
+    
     $(".sidebar-nav ul li a").on('click', function () {
         if ($(this).closest('li').hasClass("opened")) {
             $(this).closest('li').removeClass("opened")

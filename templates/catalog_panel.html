@@ -1,82 +1,86 @@
+{% load mptt_tags %}
+
 <h2>Каталог</h2>
 <nav class='sidebar-nav'>
     <ul>
-        <li><a href="#">Кондиционеры</a>
-            <ul>
-                <li><a href="#">Подраздел 1</a></li>
-                <li><a href="#">Подраздел 2</a></li>
-                <li><a href="#">Подраздел 3</a></li>
-                <li><a href="#">Подраздел 4</a></li>
+    {% for i in categories %}
+        <li class='p'>
+            <a href="/category/{{ i.slug }}/">{{ i.name }}</a>
+            {% if not i.is_leaf_node %}
+            <ul {% if i in category.breadcrumb %} style='display: block !important' {% endif %}{% if i == category %} style='display: block !important' {% endif %}>
+                {% for j in i.children.all %}
+                    <li><a {% if category.slug == j.slug %} class='active'{% endif %} href="/category/{{ j.slug }}/">{{ j.name }}</a></li>
+                {% endfor %}
             </ul>
-        </li>
-        <li><a href="#">Вентиляция</a></li>
-        <li><a href="#">Монтаж</a></li>
+            {% endif %}
+        </li>   
+    {% endfor %}
     </ul>
 </nav>
-<div class="filter">
-    <h2>Выберите нужные
-        параметры</h2>
 
-    <form action="post">
-        <div class="filter-block">
-            <div class="filter-block-title"> Название:</div>
-            <input type="text"/>
-        </div>
-        <div class="filter-block">
-            <span class="filter-block-title">Цена:</span>
-            от <input class="number" type="text" value="0 р." id="amountStart"/> до
-            <input type="text" class="number" value="25000 р." id="amountEnd"/>
+{% if category %}
+    <div class="filter">
+        <h2>Выберите нужные параметры</h2>
 
-            <div id="slider-range"></div>
-            <span class="slider-range-min"></span>
-            <span class="slider-range-max"></span>
+        <form action="post">
+            <div class="filter-block">
+                <div class="filter-block-title"> Название:</div>
+                <input type="text"/>
+            </div>
+            <div class="filter-block">
+                <span class="filter-block-title">Цена:</span>
+                от <input class="number" type="text" value="0 р." id="amountStart"/> до
+                <input type="text" class="number" value="25000 р." id="amountEnd"/>
 
-        </div>
-        <div class="filter-block">
-            <div class="filter-block-title">Производитель:</div>
-            <label><input type="checkbox"/>Daikin</label>
-            <label><input type="checkbox"/>Mitsubishi Electric</label>
-            <label><input type="checkbox"/>Toshiba</label>
-            <label><input type="checkbox"/>Mitsubishi Heavy</label>
-            <label><input type="checkbox"/>Gree</label>
-            <label><input type="checkbox"/>Panasonic</label>
-            <label><input type="checkbox"/>LG</label>
-            <label><input type="checkbox"/>General Climate</label>
-            <label><input type="checkbox"/>Fujitsu</label>
-            <label><input type="checkbox"/>General Fujitsu</label>
-            <label><input type="checkbox"/>Dantex</label>
-        </div>
-        <div class="filter-block">
-            <div class="filter-block-title">Сборка:</div>
-            <label><input type="checkbox"/>Китай</label>
-            <label><input type="checkbox"/>Малайзия</label>
-            <label><input type="checkbox"/>Таиланд</label>
-            <label><input type="checkbox"/>Турция</label>
-            <label><input type="checkbox"/>Япония</label>
-            <label><input type="checkbox"/>Panasonic</label>
-            <label><input type="checkbox"/>Южная Корея</label>
-            <label><input type="checkbox"/>Бельгия</label>
-            <label><input type="checkbox"/>Чехия</label>
-            <label><input type="checkbox"/> General Fujitsu</label>
-            <label><input type="checkbox"/>Великобритания</label>
-        </div>
-        <div class="filter-block">
-            <div class="filter-block-title">Тип:</div>
-            <select name="" id="">
-                <option value="">Выберите тип</option>
-                <option value="">тип 1</option>
-                <option value="">тип 2</option>
-                <option value="">тип 3</option>
-            </select>
-        </div>
-        <div class="filter-block">
+                <div id="slider-range"></div>
+                <span class="slider-range-min"></span>
+                <span class="slider-range-max"></span>
+            </div>
+            
+            {% for p in category.parametrs.all %}
+                {% if p.name != 'Производитель' %}
+                    {% if p.name != 'Сборка' %}
+                        <div class="filter-block">
+                            <div class="filter-block-title">{{ p.name }}:</div>
+                            {% if p.values %}
+                                <select name="parametr_{{ p.id }}">
+                                    <option value=""></option>
+                                    {% for v in p.get_values %}
+                                        <option value="{{ v }}">{{ v }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <input type="text" name='parametr_{{ p.id }}' value='' />
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="filter-block">
+                            <div class="filter-block-title">Сборка:</div>
+                            {% for v in p.get_values %}
+                                <label><input type="checkbox"  name='parametr_{{ p.id }}'/>{{ v }}</label>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="filter-block">
+                        <div class="filter-block-title">Производитель:</div>
+                        {% for v in p.get_values %}
+                            <label><input type="checkbox"  name='parametr_{{ p.id }}'/>{{ v }}</label>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            
+            
+            <div class="filter-block">
 
-            <img src="/static/img/btn-search.png" alt="" usemap="#map"/>
-            <span class="search-btn-txt">Искать</span>
-            <map name="map">
-                <area shape="poly" coords="0, 0, 1, 19, 130, 63, 260, 19, 259, 1" href="#"/>
-            </map>
+                <img src="/static/img/btn-search.png" alt="" usemap="#map"/>
+                <span class="search-btn-txt">Искать</span>
+                <map name="map">
+                    <area shape="poly" coords="0, 0, 1, 19, 130, 63, 260, 19, 259, 1" href="#"/>
+                </map>
 
-        </div>
-    </form>
-</div>
+            </div>
+        </form>
+    </div>
+{% endif %}

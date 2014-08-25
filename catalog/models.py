@@ -38,7 +38,11 @@ class Category(MPTTModel):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug=pytils.translit.slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
+        try:
+            super(Category, self).save(*args, **kwargs)
+        except:
+            self.slug=pytils.translit.slugify(self.name) + '-' + self.parent.slug
+            super(Category, self).save(*args, **kwargs)
         if self.order == 0:
             self.order = self.id
             self.save()
@@ -49,7 +53,6 @@ class Category(MPTTModel):
             return Category.objects.get(slug=page_name)
         except:
             return None
-        
 
     def breadcrumb(self):
         page = self
@@ -59,17 +62,6 @@ class Category(MPTTModel):
             page = page.parent
         breadcrumbs.reverse()
         return breadcrumbs[:-1]
-    
-    @staticmethod
-    def has_id_1c(id_1c):
-        return Category.objects.filter(id_1c=id_1c).count() > 0
-    
-    @staticmethod
-    def get_by_id_1c(id_1c):
-        if id_1c:
-            return Category.objects.filter(id_1c=id_1c)[0]
-        else:
-            return None
         
     class Meta:
         verbose_name = u'категория'

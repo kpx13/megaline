@@ -1,0 +1,36 @@
+<form action="/filter/{{ category.slug }}/" method='post'>
+    <div class="search-wrp">
+        {% if category.parametrs.all.count > 2 %}
+            <div class="search-switch"></div>
+        {% endif %}
+        
+        <div class="search__block _1">
+            <div class="search__title"> По цене:</div>
+            <p>
+                <input type="text" id="amount" />
+            </p>
+            <div id="slider-range"></div>
+            <input type="hidden" id="parametr_price_from" name='parametr_price_from' value=''/>
+            <input type="hidden" id="parametr_price_to" name='parametr_price_to' value=''/>
+        </div>
+        
+        <div class="search__block-items">
+            {% include 'filter_par.html' with par=category.parametrs.all.0 %}
+            {% include 'filter_par.html' with par=category.parametrs.all.1 %}
+           
+           
+            {% if category.parametrs.all.count > 2 %}
+                <div class="search__block-items__hidden">
+                    {% for par in category.parametrs.all %}
+                        {% if forloop.counter > 2 %}
+                            {% include 'filter_par.html' with par=par %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <button type='submit' class="search__btn"> Найти </button>
+    </div>
+    {% csrf_token %}
+</form>

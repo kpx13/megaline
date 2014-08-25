@@ -28,13 +28,8 @@ def get_common_context(request):
     c['request_url'] = request.path
     c['user'] = request.user
     c['categories'] = Category.objects.filter(parent=None).extra(order_by = ['order'])
-    c['categories_all'] = Category.objects.all()
-    c['categories_all_count_1'] = Category.objects.all().count() / 3
-    c['categories_all_count_2'] = Category.objects.all().count() * 2 / 3
-    c['categories_all_count_3'] = Category.objects.all().count()
-    c['news_recent'] = NewsItem.objects.all()[0:3]
     c['price_from'] = 0
-    c['price_to'] = 50000 
+    c['price_to'] = 90000
     
     if request.user.is_authenticated():
         c['cart_working'] = Cart
