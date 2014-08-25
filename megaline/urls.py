@@ -31,7 +31,7 @@ urlpatterns = patterns('',
     url(r'^category/(?P<slug>[\w-]+)/$', views.category),
     url(r'^category/$', views.category, {'slug': None}),
     url(r'^item/(?P<slug>[\w-]+)/$' , views.item),
-    
+
     url(r'^sitemap.xml$' , views.sitemap),
     
     url(r'^(?P<page_name>[\w-]+)/$' , views.other_page),

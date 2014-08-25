@@ -1,36 +1,5 @@
 $(function () {
 
-    $("#slider-range").slider({
-        range: true,
-        min: 0,
-        max: 90000,
-        values: [ 0, 18000 ],
-        slide: function (event, ui) {
-            $("#amountEnd").val(ui.values[ 1 ] + " р.");
-            $("#amountStart").val(ui.values[ 0 ] + " р.");
-
-        }
-    });
-    $(".slider-range-min").html($("#slider-range").slider("option", "min") + ' р.')
-    $(".slider-range-max").html($("#slider-range").slider("option", "max") + ' р.')
-
-
-    $(".header-nav a").click(function () {
-        console.log('111')
-        $(".header-nav a").removeClass("active");
-        $(this).addClass("active");
-    })
-
-    $(".tovar-preview").click(function () {
-        var index = $(this).index();
-        $(".tovar-preview").removeClass("active");
-        var item = $(".tovar-bigImg__i");
-        item.fadeOut().removeClass("active");
-        item.eq(index).addClass("active").fadeIn();
-        $(this).addClass("active");
-    });
-
-
     //-----------------Tabs-----------------//
 
 

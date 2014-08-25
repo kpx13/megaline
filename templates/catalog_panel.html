@@ -19,6 +19,43 @@
 </nav>
 
 {% if category %}
+    <script>
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 90000,
+                values: [ {{ price_from }}, {{ price_to }} ],
+                slide: function (event, ui) {
+                    $("#amountEnd").val(ui.values[ 1 ]);
+                    $("#amountStart").val(ui.values[ 0 ]);
+                    
+                    $("input#parametr_price_from").val(ui.values[ 0 ]);
+                    $("input#parametr_price_to").val(ui.values[ 1 ]);
+
+                }
+            });
+            $(".slider-range-min").html($("#slider-range").slider("option", "min"))
+            $(".slider-range-max").html($("#slider-range").slider("option", "max"))
+
+
+            $(".header-nav a").click(function () {
+                console.log('111')
+                $(".header-nav a").removeClass("active");
+                $(this).addClass("active");
+            })
+
+            $(".tovar-preview").click(function () {
+                var index = $(this).index();
+                $(".tovar-preview").removeClass("active");
+                var item = $(".tovar-bigImg__i");
+                item.fadeOut().removeClass("active");
+                item.eq(index).addClass("active").fadeIn();
+                $(this).addClass("active");
+            });
+        });
+    </script>
+    
     <div class="filter">
         <h2>Выберите нужные параметры</h2>
 
@@ -26,12 +63,12 @@
             {% csrf_token %}
             <div class="filter-block">
                 <div class="filter-block-title"> Название:</div>
-                <input type="text"/>
+                <input type="text" name='q'/>
             </div>
             <div class="filter-block">
                 <span class="filter-block-title">Цена:</span>
-                от <input class="number" type="text" value="0 р." id="amountStart"/> до
-                <input type="text" class="number" value="25000 р." id="amountEnd"/>
+                от <input class="number" type="text" value="{{ price_from }}" id="amountStart" name='parametr_price_from'/> до
+                <input type="text" class="number" value="{{ price_to }}" id="amountEnd" name='parametr_price_to'/>
 
                 <div id="slider-range"></div>
                 <span class="slider-range-min"></span>
@@ -58,7 +95,7 @@
                         <div class="filter-block">
                             <div class="filter-block-title">Сборка:</div>
                             {% for v in p.get_values %}
-                                <label><input type="checkbox"  name='parametr_{{ p.id }}'/>{{ v }}</label>
+                                <label><input type="checkbox"  name='parametr_{{ p.id }}' value='{{ v }}'/>{{ v }}</label>
                             {% endfor %}
                         </div>
                     {% endif %}
@@ -66,7 +103,7 @@
                     <div class="filter-block">
                         <div class="filter-block-title">Производитель:</div>
                         {% for v in p.get_values %}
-                            <label><input type="checkbox"  name='parametr_{{ p.id }}'/>{{ v }}</label>
+                            <label><input type="checkbox" name='parametr_{{ p.id }}' value='{{ v }}' />{{ v }}</label>
                         {% endfor %}
                     </div>
                 {% endif %}
