@@ -4,10 +4,10 @@ from dashboard import string_with_title
 import pytils
 
 class Slider(models.Model):
-    name = models.CharField(max_length='256', blank=True, verbose_name=u'надпись')
+    name = models.CharField(max_length='256', blank=True, verbose_name=u'заголовок')
     image = models.ImageField(upload_to=lambda instance, filename: 'uploads/slider/' + pytils.translit.translify(filename),
 				max_length=256, verbose_name=u'картинка')
-    href = models.CharField(max_length='256', blank=True, verbose_name=u'ссылка')
+    text = models.CharField(max_length='1024', blank=True, verbose_name=u'текст')
     sort_parameter = models.IntegerField(default=0, blank=True, verbose_name=u'порядок сортировки', help_text=u'№ слайдера: 1й, 2й .. 5й')
     
     class Meta:

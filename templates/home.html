@@ -2,26 +2,285 @@
 
 {% block title %}Главная{% endblock %}
 
-{% block content %}
-    <div class="content__left">
-        <h2>Интернет-магазин <span>Мир  Увлечений</span></h2>
+{% block slideshow %}
+    <div class="header-banner">
+        <img class="feedback-img" src="/static/img/man.png" alt=""/>
 
-        {{ content|safe }}
+        <div class="feedback">
+
+            <form action="post">
+                <div class="feedback-title">Заказать обратный звонок</div>
+                <input placeholder="Номер телефона" type="text"/>
+                <input placeholder="Ваше имя" type="text"/>
+                <button class="btn-yellow"><span>Отправить</span></button>
+                <span class="feedback-txt">Заполните форму и наш менеджер свяжется с Вами
+    в ближайшее время!</span>
+            </form>
+        </div>
+        <div class="slider">
+        
+            {% for s in slideshow %}
+                <div class="slide{% if forloop.first %} active{% endif %}">
+                    <div class="headline">
+                        <span class="subtitle">{{ s.name }}</span>
+                        {{ s.text }}
+                    </div>
+                    <img src="/media/{{ s.image }}" alt="{{ s.name }}"/>
+                </div>
+            {% endfor %}
+
+            {% load thumbnail %}
+            <ul class="slider-nav">
+                {% for s in slideshow %}
+                    {% thumbnail s.image "55x55" crop="center" as im %}
+                        <li><img src="{{ im.url }}" alt="{{ s.name }}"/></li>
+                    {% endthumbnail %}
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+{% endblock %}
 
+
+{% block content %}
+    <div class="guaranty-block-wrap">
+        <div class="links-right">
+            <a href="#">Сертификаты и лицензии</a>
+            <a href="#">Сотрудничество</a>
+            <a href="#">Вопросы</a>
+        </div>
+        <h2>ГАРАНТИИ</h2>
+
+        <div class="guaranty-blocks">
+            <div class="guaranty-block">
+                <span class='guaranty-block-term'>3</span> года
+                на кондиционеры
+                любых марок
+            </div>
+            <div class="guaranty-block">
+                <span class='guaranty-block-term'>3</span> года
+                на кондиционеры
+                любых марок
+            </div>
+            <div class="guaranty-block">
+                <span class='guaranty-block-term'>3</span> года
+                на кондиционеры
+                любых марок
+            </div>
+            <div class="guaranty-block">
+                <span class='guaranty-block-term'>3</span> года
+                на кондиционеры
+                любых марок
+            </div>
+        </div>
+    </div>
+    <div class="block-wrapper">
+        <h2>АКЦИИ И СКИДКИ</h2> <a href="#" class='view-all'>Смотреть все</a>
+
+        <div class="catalog">
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+                    </div>
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price old">17600 руб.</span>
+                        <span class="catalog__item__price new">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+
+                </div>
+            </a>
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <span class="sticker"><span>New</span></span>
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+
+                        <p>ГАРАНТИЯ: <span>3  ГОДА  </span></p>
+                    </div>
+
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+                </div>
+            </a>
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+                    </div>
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price old">17600 руб.</span>
+                        <span class="catalog__item__price new">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+
+                </div>
+            </a>
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <span class="sticker"><span>New</span></span>
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+
+                        <p>ГАРАНТИЯ: <span>3  ГОДА  </span></p>
+                    </div>
+
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+                </div>
+            </a>
+
+        </div>
+    </div>
+    
+    <div class="block-wrapper">
+        <h2>НОВИНКИ</h2> <a href="#" class='view-all'>Смотреть все</a>
+
+        <div class="catalog">
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+                    </div>
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price old">17600 руб.</span>
+                        <span class="catalog__item__price new">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+
+                </div>
+            </a>
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <span class="sticker"><span>New</span></span>
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+
+                        <p>ГАРАНТИЯ: <span>3  ГОДА  </span></p>
+                    </div>
+
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+                </div>
+            </a>
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+                    </div>
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price old">17600 руб.</span>
+                        <span class="catalog__item__price new">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+
+                </div>
+            </a>
+            <a href="#" class="catalog__item">
+                <div class="catalog__item-inner">
+                    <div class="catalog__item__img">
+                        <div class="catalog__item__img-wrp">
+                            <span class="sticker"><span>New</span></span>
+                            <img src="/static/img/item.png" alt="">
+                        </div>
+                    </div>
+                    <h4 class="catalog__item__title">Toshiba RAS-07SKP-ES</h4>
+
+                    <div class="catalog__item__descr">
+                        <p>Сборка: <span>Таиланд</span></p>
+
+                        <p> Тип: <span>настенный  </span></p>
+
+                        <p>ГАРАНТИЯ: <span>3  ГОДА  </span></p>
+                    </div>
+
+                    <div class='item-price-wrap'>
+                        <span class="catalog__item__price">17600 руб.</span>
+                    </div>
+                    <button class="addToCart btn-yellow"><span>Купить</span></button>
+                </div>
+            </a>
+
+        </div>
+    </div>
+    
+    {{ content|safe }}
+{% endblock %}
+
+{% comment %}
     <div class="content__slider-wrp">
         <div class="content__slider">
-            {% for s in slideshow %}
-                
-                <div class="content__slider__i {% if forloop.first %} active{% endif %}">
-                    <h3>{{ s.name }}</h3>
-                    {% if s.href %}<a href='{{ s.href }}'>{% endif %}
-                    <img src="/media/{{ s.image }}" alt=""/>
-                    {% if s.href %}</a>{% endif %}
-                </div>
-                
-
-            {% endfor %}
+           
         </div>
         <div class="content__slider__next"></div>
         <div class="content__slider__prev"></div>
@@ -33,5 +292,4 @@
             {% include 'item_short.html' with i=i %}
         {% endfor %}
     </div>
-    {% include 'recent_news_line.html' %}
-{% endblock %}
+{% endcomment %}

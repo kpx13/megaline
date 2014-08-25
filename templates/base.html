@@ -6,11 +6,13 @@
 <!--[if gt IE 8]><!-->
 <html lang="ru"><!--<![endif]-->
 <head>
-    <title>World of hobbies | {% block title %}{% endblock %}</title>
+    <title>Мегалайн-инжиниринг | {% block title %}{% endblock %}</title>
     <meta charset="utf-8"/>
     <!--[if lt IE 9]>
     <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,cyrillic' rel='stylesheet'
+          type='text/css'>
     <link rel="stylesheet" href="/static/css/style.css"/>
     <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
@@ -20,118 +22,193 @@
     <script src="/static/js/touch.js"></script>
 </head>
 <body>
-<div class="bg"></div>
-<div class="cart-side-layout">
-    <div class="cart-side-wrp">
-        <div class="cart-side">
-            <p>В корзине</p>
-
-            <p class="cart-side__red"><span class="cart-side__items-amount">{{ cart_count }} </span></p>
-
-            <p>на сумму </p>
-
-            <p class="cart-side__red"><span class="cart-side__items-sum"> {{ cart_sum|floatformat:"0" }} </span> р.</p>
-            <a href="/cart/" class="cart-side__btn g-btn">Купить</a>
-        </div>
-    </div>
-</div>
+<div class="bg-top"></div>
 <div class="wrapper">
     <header class="header">
-        <h1 class="header__heading">Мир увлечений World of Hobbies
+        <h1 class="header__heading">Megaline Инжиниринг
         </h1>
 
-        <div class="header__info">
-            <div class="header__enter">
-                <img class="header__login-icon" src="/static/img/login-icon.png"/>
-                    {% if user.is_authenticated %}
-                        <a href="/lk/">Личный кабинет</a> |
-                        <a href="/accounts/logout/">Выход</a>
-                    {% else %}
-                        <a href="/accounts/login/">Вход</a> |
-                        <a href="/accounts/register/">Регистрация</a>
-                    {% endif %}
-            </div>
-            <div class="header__phone"><span class="header__phone__code">+7 (917)</span> 587-21-21</div>
+
+        <div class="header-cart">
+            <i class="icon cart-icon"></i>
+            <span class="header-cart-title">Ваша корзина пуста</span>
+            <a href="#">Оформить заказ</a>
+        </div>
+        <div class="enter">
+            {% if user.is_authenticated %}
+                <a href="/lk/" class="txt-red">Личный кабинет</a> <br/>
+                <a href="/accounts/logout/">Выход</a>
+            {% else %}
+                <a href="/accounts/login/" class="txt-red">Вход</a> <br/>
+                <a href="/accounts/register/">Регистрация</a>
+            {% endif %}
             
         </div>
-        <nav class="header__nav">
-            <a href="/" class="header__nav__i {% if 'home' in request_url %}active{% endif %}">Главная </a>
-            <a href="/catalog/" class="header__nav__i {% if 'catalog' in request_url %}active{% endif %}">Каталог </a>
-            <a href="/uslugi/" class="header__nav__i {% if 'uslugi' in request_url %}active{% endif %}"> Услуги </a>
-            <a href="/partneryi/" class="header__nav__i {% if 'partneryi' in request_url %}active{% endif %}">Партнеры </a>
-            <a href="/oplata-i-dostavka/" class="header__nav__i {% if 'oplata' in request_url %}active{% endif %}">Оплата и доставка </a>
-            <a href="/kontaktyi/" class="header__nav__i {% if 'kontaktyi' in request_url %}active{% endif %}">Контакты </a>
-        </nav>
-        
-	{% block catalog_menu %}
-            {% include 'catalog_menu.html' %}
-	{% endblock %}
+        <div class="header-block">
+            <i class="icon phone-icon"></i>
+
+            <div class="header-block-title"> Время работы
+            </div>
+            <span>ПН-ВС с 09:00 до 21:00</span>
+        </div>
+        <div class="header-block">
+            <i class="icon icon-clock"></i>
+
+            <div class="header-block-title"> Время работы
+            </div>
+            <span>ПН-ВС с 09:00 до 21:00</span>
+        </div>
     </header>
-    {% block filter %}
-        {% include 'search.html' %}
+    <nav class='header-nav'>
+        <a href="/">Главная </a>
+        <a href="/o-kompanii/">О компании </a>
+        <a href="#">Услуги</a>
+        <a href="#">Прайс-лист</a>
+        <a href="#">Оплата и доставка </a>
+        <a href="#">Сертификаты и лицензии</a>
+        <a href="#">Сотрудничество </a>
+        <a href="#">Контакты </a>
+    </nav>
+    {% block slideshow %}
     {% endblock %}
-    
-    <div class="content">
-        {% block content %}
-        {% endblock %}
+    <div class="container">
+        <div class="sidebar">
+            <h2>Каталог</h2>
+            <nav class='sidebar-nav'>
+                <ul>
+                    <li><a href="#">Кондиционеры</a>
+                        <ul>
+                            <li><a href="#">Подраздел 1</a></li>
+                            <li><a href="#">Подраздел 2</a></li>
+                            <li><a href="#">Подраздел 3</a></li>
+                            <li><a href="#">Подраздел 4</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Вентиляция</a></li>
+                    <li><a href="#">Монтаж</a></li>
+                </ul>
+            </nav>
+            <div class="filter">
+                <h2>Выберите нужные
+                    параметры</h2>
+
+                <form action="post">
+                    <div class="filter-block">
+                        <div class="filter-block-title"> Название:</div>
+                        <input type="text"/>
+                    </div>
+                    <div class="filter-block">
+                        <span class="filter-block-title">Цена:</span>
+                        от <input class="number" type="text" value="0 р." id="amountStart"/> до
+                        <input type="text" class="number" value="25000 р." id="amountEnd"/>
+
+                        <div id="slider-range"></div>
+                        <span class="slider-range-min"></span>
+                        <span class="slider-range-max"></span>
+
+                    </div>
+                    <div class="filter-block">
+                        <div class="filter-block-title">Производитель:</div>
+                        <label><input type="checkbox"/>Daikin</label>
+                        <label><input type="checkbox"/>Mitsubishi Electric</label>
+                        <label><input type="checkbox"/>Toshiba</label>
+                        <label><input type="checkbox"/>Mitsubishi Heavy</label>
+                        <label><input type="checkbox"/>Gree</label>
+                        <label><input type="checkbox"/>Panasonic</label>
+                        <label><input type="checkbox"/>LG</label>
+                        <label><input type="checkbox"/>General Climate</label>
+                        <label><input type="checkbox"/>Fujitsu</label>
+                        <label><input type="checkbox"/>General Fujitsu</label>
+                        <label><input type="checkbox"/>Dantex</label>
+                    </div>
+                    <div class="filter-block">
+                        <div class="filter-block-title">Сборка:</div>
+                        <label><input type="checkbox"/>Китай</label>
+                        <label><input type="checkbox"/>Малайзия</label>
+                        <label><input type="checkbox"/>Таиланд</label>
+                        <label><input type="checkbox"/>Турция</label>
+                        <label><input type="checkbox"/>Япония</label>
+                        <label><input type="checkbox"/>Panasonic</label>
+                        <label><input type="checkbox"/>Южная Корея</label>
+                        <label><input type="checkbox"/>Бельгия</label>
+                        <label><input type="checkbox"/>Чехия</label>
+                        <label><input type="checkbox"/> General Fujitsu</label>
+                        <label><input type="checkbox"/>Великобритания</label>
+                    </div>
+                    <div class="filter-block">
+                        <div class="filter-block-title">Тип:</div>
+                        <select name="" id="">
+                            <option value="">Выберите тип</option>
+                            <option value="">тип 1</option>
+                            <option value="">тип 2</option>
+                            <option value="">тип 3</option>
+                        </select>
+                    </div>
+                    <div class="filter-block">
+
+                        <img src="/static/img/btn-search.png" alt="" usemap="#map"/>
+                        <span class="search-btn-txt">Искать</span>
+                        <map name="map">
+                            <area shape="poly" coords="0, 0, 1, 19, 130, 63, 260, 19, 259, 1" href="#"/>
+                        </map>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
     </div>
 
-    <footer class="footer">
-        <a href="/" class="footer__homelink"> <img class="footer_logo" src="/static/img/logo-footer.png" alt=""/></a>
-                
-        <div class="footer_block _1">
-            <ul>
-                {% for cat in categories_all %}
-                    {% if forloop.counter <= categories_all_count_1 %}
-                        <li><a href="/category/{{ cat.slug }}/">{{ cat.name }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="footer_block _2">
-            <ul>
-                {% for cat in categories_all %}
-                    {% if forloop.counter > categories_all_count_1 %}
-                        {% if forloop.counter <= categories_all_count_2 %}
-                            <li><a href="/category/{{ cat.slug }}/">{{ cat.name }}</li>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="footer_block _3">
-            <ul>
-                {% for cat in categories_all %}
-                    {% if forloop.counter > categories_all_count_2 %}
-                        {% if forloop.counter <= categories_all_count_3 %}
-                            <li><a href="/category/{{ cat.slug }}/">{{ cat.name }}</li>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="footer_block footer_block__info">
-            <div class="footer_block__address">
-                <p>Москва, </p>
-
-                <p> ул. Название, д. 55 </p>
-
-                <p> Тел.: +7(917)587-21-21 </p>
-                <a href="mailto:info@sitename.ru">info@sitename.ru</a>
-            </div>
-            <div class="footer_block__map">
-                <a href="/kontaktyi/">Как нас найти</a>
-            </div>
-            <div class="footer_block__soc">
-                <a href="#" class="vk"></a>
-                <a href="#" class="odn"></a>
-                <a href="#" class="fb"></a>
-                <a href="#" class="tw"></a>
-            </div>
-	    <p><br /><a href="http://webgenesis.ru/" target='_blank'>Создание и <br />поддержка сайта</a></p>
-    </footer>
 </div>
+<footer class="footer-wrap">
+    <div class="footer-contacts"><p class='footer-title'>Контакты </p>
+
+        <p> Бизнес центр "Наш центр" </p>
+        <p> г. Москва, ул. Ряжская, д. 13, 4 этаж </p>
+        <a href="#"> Схема проезда</a></div>
+    <div class="footer">
+        <ul class="footer-list">
+            <li class='footer-title'><a href="#">Главная</a></li>
+            <li><a href="#">О компании</a></li>
+            <li><a href="#">Услуги</a></li>
+            <li><a href="#">Прайс-лист</a></li>
+            <li><a href="#">Контакты</a></li>
+        </ul>
+        <ul class="footer-list">
+            <li class='footer-title'><a href="#">Услуги</a></li>
+            <li><a href="#">Установка</a></li>
+            <li><a href="#">Гарантия</a></li>
+            <li><a href="#">Сервис</a></li>
+        </ul>
+        <ul class="footer-list">
+            <li class='footer-title'><a href="#">Кондиционеры</a></li>
+            <li><a href="#">Услуги</a></li>
+            <li><a href="#">Прайс-лист</a></li>
+            <li><a href="#">Оплата и доставка</a></li>
+        </ul>
+        <ul class="footer-list">
+            <li class='footer-title'><a href="#">Статьи</a></li>
+            <li><a href="#">Написать директору</a></li>
+            <li><a href="#">Вопросы и ответы</a></li>
+            <li><a href="#">Прокладка трассы</a></li>
+        </ul>
+    </div>
+    <div class="foot-info">
+        <span class="foot-info-author"><a href="http://webgenesis.ru/" target='_blank'>Создание сайта — webgenesis.ru</a></span>
+
+        <div class="foot-soc"><img src="/static/img/soc.png" alt=""/></div>
+        <p>ООО "Мегалайн-инжиниринг" 2004-2014. </p>
+
+        <p> Продажа и монтаж климатической техники, центральных (встроенных) пылесосов </p>
+
+    </div>
+
+</footer>
+<div class="bg-bottom"></div>
 </body>
 </html>
+
